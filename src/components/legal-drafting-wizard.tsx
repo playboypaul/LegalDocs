@@ -7,6 +7,7 @@ import { AlertTriangle, CheckCircle, Scale } from 'lucide-react';
 import TemplateCard from './template-card';
 import DraftForm from './draft-form';
 import PricingCard from './pricing-card';
+import { Button } from '@/components/ui/button';
 
 type LegalDraftingWizardProps = {
   templates: Template[];
@@ -14,6 +15,7 @@ type LegalDraftingWizardProps = {
 
 export default function LegalDraftingWizard({ templates }: LegalDraftingWizardProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+  const [showAllTemplates, setShowAllTemplates] = useState(false);
   const draftFormRef = useRef<HTMLDivElement>(null);
 
   const handleSelectTemplate = (template: Template) => {
@@ -22,6 +24,8 @@ export default function LegalDraftingWizard({ templates }: LegalDraftingWizardPr
       draftFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
   };
+
+  const displayedTemplates = showAllTemplates ? templates : templates.slice(0, 8);
 
   const pricingTiers = [
     {
@@ -81,10 +85,10 @@ export default function LegalDraftingWizard({ templates }: LegalDraftingWizardPr
       <section id="templates" className="mb-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight">1. Choose Your Template</h2>
-          <p className="text-muted-foreground mt-2">Select from our library of 40+ templates.</p>
+          <p className="text-muted-foreground mt-2">Select from our library of {templates.length} templates.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {templates.map((template) => (
+          {displayedTemplates.map((template) => (
             <TemplateCard
               key={template.id}
               template={template}
@@ -92,6 +96,13 @@ export default function LegalDraftingWizard({ templates }: LegalDraftingWizardPr
             />
           ))}
         </div>
+        {templates.length > 8 && (
+          <div className="text-center mt-8">
+            <Button onClick={() => setShowAllTemplates(!showAllTemplates)}>
+              {showAllTemplates ? 'Show Less' : 'Show More'}
+            </Button>
+          </div>
+        )}
       </section>
 
       {/* AI Drafting Form */}
@@ -107,7 +118,7 @@ export default function LegalDraftingWizard({ templates }: LegalDraftingWizardPr
       <section id="pricing" className="py-16 bg-card rounded-xl">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight">Simple, Transparent Pricing</h2>
-          <p className="text-muted-foreground mt-2">Choose the plan that's right for you.</p>
+          <p className="text-muted-foreground mt-2">Choose the plan that&apos;s right for you.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {pricingTiers.map((tier) => (
