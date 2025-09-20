@@ -4,7 +4,7 @@ This app is like a magic helper that can write important-looking papers for you!
 
 ## Getting Your App Running (Your Adventure Map!)
 
-Follow these easy steps to start your magical paper-writing adventure.
+Follow these easy steps to start your magical paper-writing adventure on your own computer.
 
 ### Step 1: Tell Your Computer Where to Find Your Secret Key 🗝️
 
@@ -53,4 +53,39 @@ Now for the most exciting part!
 
 **🎉 You did it! Your app is running on your computer! 🎉**
 
-Now you can play around with it, choose templates, and see what kind of amazing documents the AI can create. Have fun!
+---
+
+## Saving Your Code to GitHub (Optional)
+
+If you want to save your project to your own GitHub account, you can follow these steps. This is a great way to keep your code safe and share it with others. You'll need to have `git` installed on your computer.
+
+1.  **Initialize a new Git repository:**
+    In your terminal, inside your project folder, run:
+    ```bash
+    git init -b main
+    ```
+
+2.  **Add all the files to be tracked:**
+    ```bash
+    git add .
+    ```
+
+3.  **Commit the files with a message:**
+    ```bash
+    git commit -m "Initial commit of my Legal Draft AI project"
+    ```
+
+4.  **Create a new repository on GitHub.** Go to [github.com/new](https://github.com/new) and create an empty repository (don't initialize it with a README or license).
+
+5.  **Link your local repository to the one on GitHub:**
+    ```bash
+    # Replace the URL with your own repository's URL
+    git remote add origin https://github.com/your-username/your-repository-name.git
+    ```
+
+6.  **Push your code to GitHub:**
+    ```bash
+    git push -u origin main
+    ```
+
+Now all your project files will be on your GitHub account!
