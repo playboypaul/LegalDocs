@@ -1,7 +1,12 @@
+'use client';
+
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { createStripeCheckoutSession } from '@/app/actions';
+import { useToast } from '@/hooks/use-toast';
 
 type PricingCardProps = {
   title: string;
@@ -11,6 +16,7 @@ type PricingCardProps = {
   buttonText: string;
   variant?: 'default' | 'secondary';
   highlight?: boolean;
+  priceId?: string;
 };
 
 export default function PricingCard({
@@ -21,7 +27,29 @@ export default function PricingCard({
   buttonText,
   variant = 'secondary',
   highlight = false,
+  priceId,
 }: PricingCardProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleCheckout = async () => {
+    if (!priceId) return;
+
+    setIsLoading(true);
+    const result = await createStripeCheckoutSession(priceId);
+
+    if (result.success && result.url) {
+      window.location.href = result.url;
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: result.error || 'Failed to create a checkout session. Please try again.',
+      });
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Card className={cn('flex flex-col', highlight && 'border-primary ring-2 ring-primary')}>
       <CardHeader>
@@ -42,7 +70,16 @@ export default function PricingCard({
         </ul>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" variant={variant}>{buttonText}</Button>
+        <Button className="w-full" variant={variant} onClick={handleCheckout} disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Redirecting...
+            </>
+          ) : (
+            buttonText
+          )}
+        </Button>
       </CardFooter>
     </Card>
   );
