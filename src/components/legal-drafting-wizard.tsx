@@ -44,6 +44,7 @@ export default function LegalDraftingWizard({ templates }: LegalDraftingWizardPr
       buttonText: 'Upgrade to Pro',
       variant: 'default' as const,
       highlight: true,
+      priceId: 'price_placeholder_pro',
     },
     {
       title: 'Agency',
@@ -52,6 +53,7 @@ export default function LegalDraftingWizard({ templates }: LegalDraftingWizardPr
       features: ['Unlimited drafts', 'Access to all templates', 'Dedicated 24/7 support', 'Team access (up to 5 users)'],
       buttonText: 'Contact Sales',
       variant: 'secondary' as const,
+      priceId: 'price_placeholder_agency',
     },
   ];
 
